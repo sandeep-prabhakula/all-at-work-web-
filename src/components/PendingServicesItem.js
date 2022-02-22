@@ -15,7 +15,7 @@ function PendingServicesItem(props) {
                 <p className="card-text">{props.workerSkills}</p>
                 <p>{props.workerLocation}</p>
                 <button type="button" className="btn btn-primary" onClick={handleRequest} style={{
-                    visibility: user === null ? 'hidden' : 'visible'
+                    display:user===null?'none':'inline'
                 }}>Mark As Complete</button>
             </div>
         </div>

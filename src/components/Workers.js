@@ -21,10 +21,11 @@ function Workers() {
     return (
         <div>
             <h2 className='text-center' style={{
-                marginTop:'50px'
+                marginTop:'70px',
+                color:'#fff'
             }}>Services For You</h2>
-            <div className="container my-4">
-                <div className="row">
+            <div className="container">
+                <div className="row my-3">
                     {
                         serviceProviders.map((worker) => {
                             return <div key={worker.workerMobile} className="col-md-4">

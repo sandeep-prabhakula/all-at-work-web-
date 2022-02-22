@@ -15,13 +15,17 @@ const AuthState = (props) => {
         const res = await signInWithPopup(auth, provider)
         const fbUser = res.user
         setUser(fbUser)
-        ref.doc(fbUser.uid).get.limit(1).then(doc => {
-            if(!doc.exists){
+        ref.doc(fbUser.uid).get().then((doc) => {
+            if (!doc.exists) {
                 ref.doc(fbUser.uid).set({
                     "uid": fbUser.uid,
                     "userEmail": fbUser.email,
                     "userImage": fbUser.photoURL,
                     "userName": fbUser.displayName,
+                    "usedServices":[],
+                    "userMobile":'',
+                    "userPINCode":'',
+                    "userAddress":''
                 })
             }
         })
@@ -51,12 +55,31 @@ const AuthState = (props) => {
     }
 
     // Complete the pending services
-    const completePendingServices = async ()=>{
+    const completePendingServices = async () => {
         alert(`Install "All at Work" app for more convient operations`)
+        // TODO delete completed services from the list
     }
 
+    // Complete profile
+    const completeProfile = async (mobile, address, pincode) => {
+        if (user !== null) {
+            ref.doc(user.uid).update({
+                "userPINCode": pincode,
+                "userAddress": address,
+                "userMobile": mobile,
+            })
+        }
+    }
+
+    // Delete the User
+    const deleteTheUser = async () => {
+        const currentUser = auth.currentUser
+        await currentUser.delete()
+        await ref.doc(currentUser.uid).delete()
+        setUser(null)
+    }
     return (
-        <AuthContext.Provider value={{ user, handleSignIn, handleSignOut, setUser, requestService, pendingServices, readPendingServices,completePendingServices }}>
+        <AuthContext.Provider value={{ user, handleSignIn, handleSignOut, setUser, requestService, pendingServices, readPendingServices, completePendingServices, completeProfile, deleteTheUser }}>
             {props.children}
         </AuthContext.Provider>
     )
