@@ -6,7 +6,7 @@ function PendingServicesItem(props) {
     const context = useContext(AuthContext)
     const {user,completePendingServices} = context
     const handleRequest =()=>{
-        completePendingServices()
+        completePendingServices(props.workerMobile)
     }
     return (
         <div className="card">

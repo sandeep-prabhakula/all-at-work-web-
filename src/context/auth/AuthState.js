@@ -9,7 +9,7 @@ const AuthState = (props) => {
     const provider = new GoogleAuthProvider();
     const auth = firebase.auth()
     const ref = firebase.firestore().collection('users')
-
+    const workerRef = firebase.firestore().collection('workers')
     // Sign in or Register User
     const handleSignIn = async () => {
         const res = await signInWithPopup(auth, provider)
@@ -22,10 +22,10 @@ const AuthState = (props) => {
                     "userEmail": fbUser.email,
                     "userImage": fbUser.photoURL,
                     "userName": fbUser.displayName,
-                    "usedServices":[],
-                    "userMobile":'',
-                    "userPINCode":'',
-                    "userAddress":''
+                    "usedServices": [],
+                    "userMobile": '',
+                    "userPINCode": '',
+                    "userAddress": ''
                 })
             }
         })
@@ -55,9 +55,19 @@ const AuthState = (props) => {
     }
 
     // Complete the pending services
-    const completePendingServices = async () => {
-        alert(`Install "All at Work" app for more convient operations`)
-        // TODO delete completed services from the list
+    const completePendingServices = async (workerMobile) => {
+        // task pending;
+        const items = pendingServices;
+        items.forEach((element) => {
+            console.log(element)
+        })
+
+        //NEEDED Code Don't Delete
+        // if(user!==null){
+        //     ref.doc(user.uid).update({
+        //         "usedServices":pendingServices
+        //     })
+        // }
     }
 
     // Complete profile
@@ -78,8 +88,24 @@ const AuthState = (props) => {
         await ref.doc(currentUser.uid).delete()
         setUser(null)
     }
+
+    const registerWorker = async (name, age, location, mobile, skills, pincode) => {
+        workerRef.doc(mobile).get().then((doc) => {
+            if (!doc.exists) {
+                workerRef.doc(mobile).set({
+                    "workerAge": age,
+                    "workerLocation": location,
+                    "workerMobile": mobile,
+                    "workerName": name,
+                    "workerPINCode": pincode,
+                    "workerSkills": skills,
+                    "worksDoneThisWeek": 0
+                })
+            }
+        })
+    }
     return (
-        <AuthContext.Provider value={{ user, handleSignIn, handleSignOut, setUser, requestService, pendingServices, readPendingServices, completePendingServices, completeProfile, deleteTheUser }}>
+        <AuthContext.Provider value={{ user, handleSignIn, handleSignOut, setUser, requestService, pendingServices, readPendingServices, completePendingServices, completeProfile, deleteTheUser, registerWorker }}>
             {props.children}
         </AuthContext.Provider>
     )

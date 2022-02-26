@@ -32,10 +32,19 @@ function Navbar() {
                             <Link className={`nav-link ${location.pathname === '/updateprofile' ? 'active' : ''}`} to="/updateprofile">Update profie</Link>
                         </li>
                     </ul>
+
+                    <Link to='/registerworker'>
+                        <button type="button" className="btn btn-primary rounded-pill mx-2" style={{
+                            display: user === null ? 'inline' : 'none'
+                        }}>
+                            Register as a Worker
+                        </button>
+                    </Link>
+
                     <button type="button" className="btn btn-primary rounded-pill" onClick={handleClick} style={{
                         display: user === null ? 'inline' : 'none'
                     }}>
-                        Sign In
+                        Sign In as a User
                     </button>
                     <Link to="/userprofile" >
                         <img src={user !== null ? user.photoURL : 'https://louisville.edu/enrollmentmanagement/images/person-icon/image'} alt="dp" style={{

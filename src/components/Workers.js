@@ -25,10 +25,10 @@ function Workers() {
                 color:'#fff'
             }}>Services For You</h2>
             <div className="container">
-                <div className="row my-3">
+                <div className="row mx-2">
                     {
                         serviceProviders.map((worker) => {
-                            return <div key={worker.workerMobile} className="col-md-4">
+                            return <div key={worker.workerMobile} className="col-md-4 my-2">
                                 <WorkerItem workerName={worker.workerName} workerSkills={worker.workerSkills} workerAge={worker.workerAge} workerLocation={worker.workerLocation} />
                             </div>
                         })

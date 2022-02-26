@@ -19,11 +19,11 @@ function PendingServices() {
             <div className="container my-4" style={{
                 display: user === null ? 'none' : 'block',
             }}>
-                <div className="row">
+                <div className="row mx-2">
                     {
                         pendingServices.map((worker) => {
-                            return <div key={worker.workerMobile} className="col-md-4">
-                                <PendingServicesItem workerName={worker.workerName} workerSkills={worker.workerSkills} workerAge={worker.workerAge} workerLocation={worker.workerLocation} />
+                            return <div key={worker.workerMobile} className="col-md-4 my-2">
+                                <PendingServicesItem workerName={worker.workerName} workerSkills={worker.workerSkills} workerAge={worker.workerAge} workerLocation={worker.workerLocation} workerMobile={worker.workerMobile}/>
                             </div>
                         })
                     }
