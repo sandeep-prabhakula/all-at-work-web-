@@ -11,6 +11,9 @@ const AuthState = (props) => {
     const ref = firebase.firestore().collection('users')
     const workerRef = firebase.firestore().collection('workers')
     // Sign in or Register User
+    auth.onAuthStateChanged((user)=>{
+        setUser(user)
+    })
     const handleSignIn = async () => {
         const res = await signInWithPopup(auth, provider)
         const fbUser = res.user
@@ -33,8 +36,10 @@ const AuthState = (props) => {
 
     //Signout the user
     const handleSignOut = async () => {
-        setUser(null)
         await signOut(auth)
+        auth.onAuthStateChanged((user)=>{
+            setUser(user)
+        })
     }
 
     //Requesting for service
