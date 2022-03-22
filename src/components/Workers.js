@@ -7,7 +7,7 @@ function Workers() {
     const ref = firebase.firestore().collection('workers')
     const [serviceProviders, setWorkers] = useState([])
     const handleClick = async () => {
-        const data = await ref.get()
+        const data = await ref.orderBy('worksDoneThisWeek','asc').get()
         const items = []
         data.docs.forEach(data => {
             items.push(data.data())
